@@ -40,10 +40,6 @@ namespace baseService.Controllers
         {
             using(var db = new PollContext())
             {
-                Console.WriteLine("heheheheheh");
-                Console.WriteLine(poll.PollQuestion);
-                Console.WriteLine(poll.PollId);
-
                 db.Polls.Add(poll);
 
                 var count = db.SaveChanges();

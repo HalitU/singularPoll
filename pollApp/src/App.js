@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 
@@ -67,7 +68,8 @@ class App extends Component {
       }      
     ],
     voteConnection: null,
-    poll_id: null
+    poll_id: null,
+    current_pie: null
   }
 
   componentWillMount(){
@@ -97,23 +99,69 @@ class App extends Component {
   onVoteSubmit = () => {
     this.state.voteConnection.invoke("SendMessage", "hehe").catch(err => console.error(err.toString()));
   }
-  pull_poll(poll_id){
+  // Pulling the poll will be done via API
+  // After that comments and voting process will be done on two separate but connected hubs
+  // This method will be used when someone wants to access to another poll
+  pull_poll = (poll_id) => {
     console.log("Getting poll information with id.. ", poll_id);
+    // For the sake of experiment we are getting the poll with ID 5
+    axios.get('http://localhost:5000/api/values/' + poll_id)
+      .then((response) => {
+        console.log(response);
+        this.setState({ current_pie: response.data });
+      });  
   }
   render() {
+    if ( this.state.current_pie == null ){
+      console.log("HAHA!");
+      return(
+        <Grid verticalAlign='middle' centered columns={2}>
+          <Grid.Row></Grid.Row>
+          <Grid.Row></Grid.Row>
+          <Grid.Row></Grid.Row>
+          <Grid.Row></Grid.Row>
+          <Grid.Row></Grid.Row>
+          <Grid.Row></Grid.Row>
+          {/* Navigation Bar */}
+          <Grid.Row>
+            <TopBar 
+              current_id="None"
+              pull_poll={ this.pull_poll }
+            />
+          </Grid.Row>     
+        </Grid>        
+      );
+    }
+    // Else prepare data update
+    var comment_section = [];
+    this.state.current_pie.comments.forEach(element => {
+      comment_section.push(
+        <BlogBody key={ element.commentId }>
+          <BlogPost
+            author={ element.commentId }
+            image={ faker.image.avatar() } 
+            text={ element.text }  
+            key={ element.commentId }   
+          />
+        </BlogBody> 
+      );
+    });
     return (
-     
+    
       <Grid centered columns={2}>
         {/* Navigation Bar */}
         <Grid.Row>
-          <TopBar />
+          <TopBar 
+            pull_poll={ this.pull_poll }
+          />
         </Grid.Row>
-
+        
         {/* Pie Chart for the Poll */}
         <Grid.Column>
           <ChartView 
             COLORS={COLORS} 
-            pie_data={this.state.pie_data} 
+            choices={ this.state.current_pie.results } 
+            pollQuestion= { this.state.current_pie.pollQuestion }
           />
         </Grid.Column>
         
@@ -121,7 +169,9 @@ class App extends Component {
         <Grid.Row centered columns={4}>
           <GridColumn>
             <VoteForm 
+              voteQuestion={ this.state.current_pie.pollQuestion }
               voteSubmit={ this.onVoteSubmit }
+              choices={ this.state.current_pie.results }
             />
           </GridColumn>
         </Grid.Row>
@@ -131,19 +181,10 @@ class App extends Component {
           <Grid.Column>
             <Header as='h3'>Comments</Header> 
             <Comment>
-              <BlogBody>
-                <BlogPost
-                  author="alex"
-                  image={ faker.image.avatar() } 
-                  text="Nice react app!"            
-                >
-                </BlogPost>
-              </BlogBody>            
+              { comment_section }                    
             </Comment>        
           </Grid.Column>   
-          <br/>
-          <br/>
-          <br/>
+          <br/><br/><br/>
           <Grid.Row centered columns={4}>
             <Header as='h3'>Post New Comment</Header>
             <CommentPost />
