@@ -22,6 +22,7 @@ class VoteForm extends React.Component{
     render() {
         return (
         <Form onSubmit={ this.aVoteMethod }>
+            <Header as="h3">What do you think about?</Header>
             <Form.Field>
             <Radio
                 label='Choose this'

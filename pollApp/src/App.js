@@ -21,6 +21,9 @@ TODO:
   4. Comment section for each poll
   5. Generate different colors for each entry
   6. Dynamically update votes in a poll
+  7. SQLLite for the dotnet part
+  8. Each poll id will activate another unique hub
+  9. Only show navbar items or random poll at initial opening
 */
 
 // Semantic-ui-react
@@ -63,7 +66,8 @@ class App extends Component {
         "value": 189
       }      
     ],
-    voteConnection: null
+    voteConnection: null,
+    poll_id: null
   }
 
   componentWillMount(){
@@ -93,20 +97,27 @@ class App extends Component {
   onVoteSubmit = () => {
     this.state.voteConnection.invoke("SendMessage", "hehe").catch(err => console.error(err.toString()));
   }
+  pull_poll(poll_id){
+    console.log("Getting poll information with id.. ", poll_id);
+  }
   render() {
     return (
      
       <Grid centered columns={2}>
+        {/* Navigation Bar */}
         <Grid.Row>
           <TopBar />
         </Grid.Row>
 
+        {/* Pie Chart for the Poll */}
         <Grid.Column>
           <ChartView 
             COLORS={COLORS} 
             pie_data={this.state.pie_data} 
           />
         </Grid.Column>
+        
+        {/* Main Vote Section */}
         <Grid.Row centered columns={4}>
           <GridColumn>
             <VoteForm 
@@ -114,9 +125,11 @@ class App extends Component {
             />
           </GridColumn>
         </Grid.Row>
+        
+        {/* Comments */}
         <Grid.Row centered columns={4}>
           <Grid.Column>
-            <Header as='h1'>Comments</Header> 
+            <Header as='h3'>Comments</Header> 
             <Comment>
               <BlogBody>
                 <BlogPost
@@ -132,7 +145,7 @@ class App extends Component {
           <br/>
           <br/>
           <Grid.Row centered columns={4}>
-            <Header as='h2'>Post New Comment</Header>
+            <Header as='h3'>Post New Comment</Header>
             <CommentPost />
           </Grid.Row>
         </Grid.Row>

@@ -52,7 +52,7 @@ class ChartView extends React.Component{
                 <PieChart width={730} height={250}>
                     <Pie isAnimationActive={false} data={ this.state.data } dataKey="value" nameKey="name" outerRadius={70} label>
                     {
-                        this.pie_data.map((entry, index) => <Cell fill={this.COLORS[index % this.COLORS.length]}/>)
+                        this.pie_data.map((entry, index) => <Cell key={null} fill={this.COLORS[index % this.COLORS.length]}/>)
                     }
                     </Pie>
                 </PieChart> 

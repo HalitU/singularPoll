@@ -12,6 +12,12 @@ class TopBar extends React.Component{
         return(
             <Menu>
                 <Menu.Item
+                name='poll_id'
+                >
+                Poll ID: 41231
+                </Menu.Item>                
+
+                <Menu.Item
                 name='editorials'
                 active={activeItem === 'editorials'}
                 onClick={this.handleItemClick}
@@ -19,16 +25,11 @@ class TopBar extends React.Component{
                 New Pool
                 </Menu.Item>
         
-                <Menu.Item name='reviews' active={activeItem === 'reviews'} onClick={this.handleItemClick}>
-                News
-                </Menu.Item>
-        
-                <Menu.Item
-                name='upcomingEvents'
-                active={activeItem === 'upcomingEvents'}
-                onClick={this.handleItemClick}
-                >
-                About
+                <Menu.Item 
+                name='reviews' 
+                active={activeItem === 'reviews'} 
+                onClick={this.handleItemClick}>
+                Existing Pool
                 </Menu.Item>
             </Menu>            
         );
