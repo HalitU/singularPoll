@@ -2,13 +2,6 @@ import React from 'react';
 import { Form, Header, Radio } from 'semantic-ui-react';
 
 class VoteForm extends React.Component{
-    // state = { selectedOption: null };
-    
-    // handleSubmit = (event) => {
-    //     // Dont refresh the page
-    //     event.preventDefault();
-    //     console.log(this.state.selectedOption);
-    // }
     state = {
         voteQuestion: null,
         choices: null

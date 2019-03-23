@@ -13,20 +13,6 @@ import VoteForm from './components/VoteForm';
 // For fake images
 import faker from 'faker';
 
-/*
-TODO: 
-  1. New poll forum
-  2. Database connection
-  3. Map poll results to pie chart
-  4. Comment section for each poll
-  5. Generate different colors for each entry
-  6. Dynamically update votes in a poll
-  7. SQLLite for the dotnet part
-  8. Each poll id will activate another unique hub
-  9. Only show navbar items or random poll at initial opening
-  10. Add ConnectionId to Group or create if it doesnt exist for SignalR
-*/
-
 // Semantic-ui-react
 import { Grid, Comment, Header, GridColumn } from 'semantic-ui-react';
 import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@aspnet/signalr';
@@ -94,32 +80,6 @@ class App extends Component {
 
       this.setState({ voteConnection: hubConnection });
   }
-
-  // componentWillMount(){
-  //   console.log("Testing hub...");
-
-  //   const hubConnection = new HubConnectionBuilder()
-  //     .withUrl('http://localhost:5000/chatHub', {
-  //       skipNegotiation: true,
-  //       transport: HttpTransportType.WebSockets
-  //     })
-  //     .configureLogging(LogLevel.Error)
-  //     .build();
-
-  //   hubConnection.start().then(() => {
-  //     console.log("connected!");
-      
-  //     var test = this.pull_poll;
-  //     // Recieving message means something is changed with the poll so we need to re-take the data
-  //     hubConnection.on("ReceiveMessage", (message) => {
-  //       const encodedMsg = message;
-  //       console.log(encodedMsg);
-  //       console.log(test);
-  //     });    
-  //   }).finally(
-  //     this.setState({ voteConnection: hubConnection })
-  //   );
-  // }
   // Two most crucial methods for the poll hub
   onVoteSubmit = async (choice) => {
     // console.log("Final Choice: " + choice);
