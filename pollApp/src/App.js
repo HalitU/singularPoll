@@ -59,7 +59,6 @@ class App extends Component {
   }
 
   async componentWillMount(){
-    console.log("Testing hub...");
 
     const hubConnection = new HubConnectionBuilder()
       .withUrl('http://localhost:5000/chatHub', {
@@ -73,19 +72,15 @@ class App extends Component {
 
       hubConnection.on("ReceiveMessage", (message) => {
         const endcodedMsg = message;
-        console.log(endcodedMsg);
         this.pull_poll(this.state.current_pie.pollId);
       });
-      console.log("Connected!");
 
       this.setState({ voteConnection: hubConnection });
   }
   // Two most crucial methods for the poll hub
   onVoteSubmit = async (choice) => {
-    // console.log("Final Choice: " + choice);
     await this.state.voteConnection.invoke("SendVote", choice, this.state.current_pie.pollId);
     this.pull_poll(this.state.current_pie.pollId);
-    console.log(this.state.current_pie);
   }
   onMessageSubmit = async (message) => {
     await this.state.voteConnection.invoke("SendMessage", message, this.state.current_pie.pollId);
@@ -130,18 +125,22 @@ class App extends Component {
     var comment_section = [];
     var no_comment_error = null;
     if (this.state.current_pie.comments !== null){
-      this.state.current_pie.comments.forEach(element => {
-        comment_section.push(
-          <BlogBody key={ element.commentId }>
-            <BlogPost
-              author={ element.commentId }
-              image={ faker.image.avatar() } 
-              text={ element.text }  
-              key={ element.commentId }   
-            />
-          </BlogBody> 
-        );
-      });      
+      if( this.state.current_pie.comments.length !== 0 ){
+        this.state.current_pie.comments.forEach(element => {
+          comment_section.push(
+            <BlogBody key={ element.commentId }>
+              <BlogPost
+                author={ element.commentId }
+                image={ faker.image.avatar() } 
+                text={ element.text }  
+                key={ element.commentId }   
+              />
+            </BlogBody> 
+          );
+        });              
+      }else{
+        no_comment_error = <Comment>Be the first one to comment!</Comment>;
+      }
     }else{
       no_comment_error = <Comment>Be the first one to comment!</Comment>;
     }

@@ -21,11 +21,9 @@ class TopBar extends React.Component{
 
     handleChange = (event) => {
         this.setState({ new_poll_id: event.target.value });
-        console.log(this.state);
     }
 
     handleSubmit = (event) => {
-        console.log(this.state);
         this.pull_poll(this.state.new_poll_id);
     }
     componentDidUpdate(preProp){

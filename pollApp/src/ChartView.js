@@ -17,7 +17,6 @@ class ChartView extends React.Component{
         this.state.choices = props.choices.results;
     }    
     componentDidUpdate(prevProps){
-        console.log("ahh ah");
         if(prevProps.pollQuestion !== this.props.pollQuestion)
             this.setState({ choices: this.props.choices.results });
         if(prevProps.choices !== this.props.choices)

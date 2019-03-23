@@ -16,8 +16,6 @@ class VoteForm extends React.Component{
     handleChange = (e, { name, value }) => this.setState({ [name]: value, value: value })
 
     handleSubmit = () => {
-        console.log("Submitted value: ", this.state.value);
-        console.log(this.state.choices);
         this.aVoteMethod(this.state.value);
     }
 
