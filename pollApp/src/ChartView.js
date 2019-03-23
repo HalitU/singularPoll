@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 
 // Recharts
 import { Pie, PieChart, Cell, ResponsiveContainer } from 'recharts';
@@ -19,7 +18,7 @@ class ChartView extends React.Component{
     }    
     componentDidUpdate(prevProps){
         console.log("ahh ah");
-        if(prevProps.pollQuestion != this.props.pollQuestion)
+        if(prevProps.pollQuestion !== this.props.pollQuestion)
             this.setState({ choices: this.props.choices });
     }
     render(){

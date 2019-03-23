@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-import { Grid, Image, Comment, Header } from 'semantic-ui-react';
+import { Comment } from 'semantic-ui-react';
 
 class BlogPost extends React.Component{
     

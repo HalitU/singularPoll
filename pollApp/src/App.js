@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
 import './App.css';
 
 // Additional imports
@@ -25,11 +24,12 @@ TODO:
   7. SQLLite for the dotnet part
   8. Each poll id will activate another unique hub
   9. Only show navbar items or random poll at initial opening
+  10. Add ConnectionId to Group or create if it doesnt exist for SignalR
 */
 
 // Semantic-ui-react
-import { Grid, Image, Comment, Header, GridColumn } from 'semantic-ui-react';
-import { HubConnection, HubConnectionBuilder, LogLevel, HttpTransportType } from '@aspnet/signalr';
+import { Grid, Comment, Header, GridColumn } from 'semantic-ui-react';
+import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@aspnet/signalr';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -111,22 +111,25 @@ class App extends Component {
         this.setState({ current_pie: response.data });
       });  
   }
+  post_poll = (dict) => {
+    console.log("Posting poll information with id...");
+    axios.post('http://localhost:5000/api/values/', dict)
+    .then((response) => {
+      console.log(response);
+      this.setState({ current_pie: response.data });
+    }); 
+  }
   render() {
     if ( this.state.current_pie == null ){
       console.log("HAHA!");
       return(
-        <Grid verticalAlign='middle' centered columns={2}>
-          <Grid.Row></Grid.Row>
-          <Grid.Row></Grid.Row>
-          <Grid.Row></Grid.Row>
-          <Grid.Row></Grid.Row>
-          <Grid.Row></Grid.Row>
-          <Grid.Row></Grid.Row>
+        <Grid verticalAlign='middle' className="vertical-align" centered columns={2}>
           {/* Navigation Bar */}
           <Grid.Row>
             <TopBar 
               current_id="None"
               pull_poll={ this.pull_poll }
+              post_poll={ this.post_poll }
             />
           </Grid.Row>     
         </Grid>        
@@ -134,18 +137,24 @@ class App extends Component {
     }
     // Else prepare data update
     var comment_section = [];
-    this.state.current_pie.comments.forEach(element => {
-      comment_section.push(
-        <BlogBody key={ element.commentId }>
-          <BlogPost
-            author={ element.commentId }
-            image={ faker.image.avatar() } 
-            text={ element.text }  
-            key={ element.commentId }   
-          />
-        </BlogBody> 
-      );
-    });
+    var no_comment_error = null;
+    if (this.state.current_pie.comments.length !== 0){
+      this.state.current_pie.comments.forEach(element => {
+        comment_section.push(
+          <BlogBody key={ element.commentId }>
+            <BlogPost
+              author={ element.commentId }
+              image={ faker.image.avatar() } 
+              text={ element.text }  
+              key={ element.commentId }   
+            />
+          </BlogBody> 
+        );
+      });      
+    }else{
+      no_comment_error = <Comment>Be the first one to comment!</Comment>;
+    }
+
     return (
     
       <Grid centered columns={2}>
@@ -153,6 +162,8 @@ class App extends Component {
         <Grid.Row>
           <TopBar 
             pull_poll={ this.pull_poll }
+            current_id={ this.state.current_pie.pollId }
+            post_poll={ this.post_poll }
           />
         </Grid.Row>
         
@@ -180,6 +191,7 @@ class App extends Component {
         <Grid.Row centered columns={4}>
           <Grid.Column>
             <Header as='h3'>Comments</Header> 
+            { no_comment_error }
             <Comment>
               { comment_section }                    
             </Comment>        

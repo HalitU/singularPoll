@@ -26,7 +26,7 @@ class VoteForm extends React.Component{
 
     componentDidUpdate(prevProps){
         // Condition check is important to prevent infinite loops
-        if(prevProps.voteQuestion != this.props.voteQuestion){
+        if(prevProps.voteQuestion !== this.props.voteQuestion){
             this.setState({ voteQuestion: this.props.voteQuestion, choices: this.props.choices });
         }
     }
