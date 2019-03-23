@@ -14,12 +14,15 @@ class ChartView extends React.Component{
     constructor(props) {
         super(props);  
         this.COLORS = props.COLORS;
-        this.state.choices = props.choices;
+        this.state.choices = props.choices.results;
     }    
     componentDidUpdate(prevProps){
         console.log("ahh ah");
         if(prevProps.pollQuestion !== this.props.pollQuestion)
-            this.setState({ choices: this.props.choices });
+            this.setState({ choices: this.props.choices.results });
+        if(prevProps.choices !== this.props.choices)
+            this.setState({ choices: this.props.choices.results });
+
     }
     render(){
         return(

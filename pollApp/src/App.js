@@ -72,7 +72,7 @@ class App extends Component {
     current_pie: null
   }
 
-  componentWillMount(){
+  async componentWillMount(){
     console.log("Testing hub...");
 
     const hubConnection = new HubConnectionBuilder()
@@ -82,46 +82,77 @@ class App extends Component {
       })
       .configureLogging(LogLevel.Error)
       .build();
-
-    hubConnection.start().then(function(){
-      console.log("connected!");
-      
-      hubConnection.invoke("SendMessage", "hehe").catch(err => console.error(err.toString()));
+    
+      await hubConnection.start();
 
       hubConnection.on("ReceiveMessage", (message) => {
-        const encodedMsg = message;
-        console.log(encodedMsg);
-      });    
-    }).finally(
-      this.setState({ voteConnection: hubConnection })
-    );
+        const endcodedMsg = message;
+        console.log(endcodedMsg);
+        this.pull_poll(this.state.current_pie.pollId);
+      });
+      console.log("Connected!");
+
+      this.setState({ voteConnection: hubConnection });
   }
-  onVoteSubmit = () => {
-    this.state.voteConnection.invoke("SendMessage", "hehe").catch(err => console.error(err.toString()));
+
+  // componentWillMount(){
+  //   console.log("Testing hub...");
+
+  //   const hubConnection = new HubConnectionBuilder()
+  //     .withUrl('http://localhost:5000/chatHub', {
+  //       skipNegotiation: true,
+  //       transport: HttpTransportType.WebSockets
+  //     })
+  //     .configureLogging(LogLevel.Error)
+  //     .build();
+
+  //   hubConnection.start().then(() => {
+  //     console.log("connected!");
+      
+  //     var test = this.pull_poll;
+  //     // Recieving message means something is changed with the poll so we need to re-take the data
+  //     hubConnection.on("ReceiveMessage", (message) => {
+  //       const encodedMsg = message;
+  //       console.log(encodedMsg);
+  //       console.log(test);
+  //     });    
+  //   }).finally(
+  //     this.setState({ voteConnection: hubConnection })
+  //   );
+  // }
+  // Two most crucial methods for the poll hub
+  onVoteSubmit = async (choice) => {
+    // console.log("Final Choice: " + choice);
+    await this.state.voteConnection.invoke("SendVote", choice, this.state.current_pie.pollId);
+    this.pull_poll(this.state.current_pie.pollId);
+    console.log(this.state.current_pie);
+  }
+  onMessageSubmit = async (message) => {
+    await this.state.voteConnection.invoke("SendMessage", message, this.state.current_pie.pollId);
+    this.pull_poll(this.state.current_pie.pollId);
   }
   // Pulling the poll will be done via API
   // After that comments and voting process will be done on two separate but connected hubs
   // This method will be used when someone wants to access to another poll
-  pull_poll = (poll_id) => {
-    console.log("Getting poll information with id.. ", poll_id);
-    // For the sake of experiment we are getting the poll with ID 5
-    axios.get('http://localhost:5000/api/values/' + poll_id)
-      .then((response) => {
-        console.log(response);
-        this.setState({ current_pie: response.data });
-      });  
+  pull_poll = async (poll_id) => {
+    // Check if the user is already in a hub, if so remove the user from that hub
+    if (this.state.current_pie !== null)
+      await this.state.voteConnection.invoke("RemoveFromGroup", this.state.current_pie.pollId);
+    const response = await axios.get('http://localhost:5000/api/values/' + poll_id);
+    this.setState({ current_pie: response.data });
+    await this.state.voteConnection.invoke("AddToGroup", this.state.current_pie.pollId);
   }
-  post_poll = (dict) => {
-    console.log("Posting poll information with id...");
-    axios.post('http://localhost:5000/api/values/', dict)
-    .then((response) => {
-      console.log(response);
-      this.setState({ current_pie: response.data });
-    }); 
+  post_poll = async (dict) => {
+    // Remove client from the previous poll hub if user is already in one
+    if(this.state.current_pie !== null)
+      await this.state.voteConnection.invoke("RemoveFromGroup", this.state.current_pie.pollId);
+    // Post the poll and add user to that polls Hub
+    const response = await axios.post('http://localhost:5000/api/values/', dict);
+    this.setState({ current_pie: response.data });
+    await this.state.voteConnection.invoke("AddToGroup", this.state.current_pie.pollId); 
   }
   render() {
     if ( this.state.current_pie == null ){
-      console.log("HAHA!");
       return(
         <Grid verticalAlign='middle' className="vertical-align" centered columns={2}>
           {/* Navigation Bar */}
@@ -138,7 +169,7 @@ class App extends Component {
     // Else prepare data update
     var comment_section = [];
     var no_comment_error = null;
-    if (this.state.current_pie.comments.length !== 0){
+    if (this.state.current_pie.comments !== null){
       this.state.current_pie.comments.forEach(element => {
         comment_section.push(
           <BlogBody key={ element.commentId }>
@@ -171,7 +202,7 @@ class App extends Component {
         <Grid.Column>
           <ChartView 
             COLORS={COLORS} 
-            choices={ this.state.current_pie.results } 
+            choices={ this.state.current_pie } 
             pollQuestion= { this.state.current_pie.pollQuestion }
           />
         </Grid.Column>
@@ -199,7 +230,9 @@ class App extends Component {
           <br/><br/><br/>
           <Grid.Row centered columns={4}>
             <Header as='h3'>Post New Comment</Header>
-            <CommentPost />
+            <CommentPost 
+              commentSubmit={ this.onMessageSubmit }
+            />
           </Grid.Row>
         </Grid.Row>
       </Grid>

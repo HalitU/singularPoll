@@ -19,9 +19,13 @@ class VoteForm extends React.Component{
         this.state.voteQuestion = props.voteQuestion;
         this.state.choices = props.choices;
     }
-    handleChange = (e, { value }) => this.setState({ value })
+    // handleChange = (e, { value }) => this.setState({ value })
+    handleChange = (e, { name, value }) => this.setState({ [name]: value, value: value })
+
     handleSubmit = () => {
         console.log("Submitted value: ", this.state.value);
+        console.log(this.state.choices);
+        this.aVoteMethod(this.state.value);
     }
 
     componentDidUpdate(prevProps){
@@ -39,18 +43,18 @@ class VoteForm extends React.Component{
                     <Radio
                         label={ element.name }
                         name='radioGroup'
-                        value={ element.name }
-                        checked={this.state.value === element.name}
+                        value={ element.resultId }
+                        checked={this.state.value === element.resultId}
                         onChange={this.handleChange}
                     />
                 </Form.Field>                
             );
         });
         return (
-        <Form onSubmit={ this.aVoteMethod }>
+        <Form>
             <Header as="h3">{ this.state.voteQuestion }</Header>
             { radio_fields }
-            <Form.Button content='Submit' />
+            <Form.Button onClick={ this.handleSubmit } content='Submit' />
         </Form>
         )
     }
