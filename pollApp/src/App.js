@@ -17,8 +17,6 @@ import faker from 'faker';
 import { Grid, Comment, Header, GridColumn } from 'semantic-ui-react';
 import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@aspnet/signalr';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
 class App extends Component {
   state = {
     data : [
@@ -160,7 +158,6 @@ class App extends Component {
         {/* Pie Chart for the Poll */}
         <Grid.Column>
           <ChartView 
-            COLORS={COLORS} 
             choices={ this.state.current_pie } 
             pollQuestion= { this.state.current_pie.pollQuestion }
           />

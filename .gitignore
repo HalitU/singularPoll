@@ -5,6 +5,10 @@
 .pnp
 .pnp.js
 
+# db
+/baseService/Migrations
+.db
+
 # testing
 /pollApp/coverage
 
@@ -21,6 +25,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# db
-.db

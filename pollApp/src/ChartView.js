@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Random color generator
+import RandomColor from 'randomcolor';
+
 // Recharts
-import { Pie, PieChart, Cell, ResponsiveContainer } from 'recharts';
+import { Legend, Pie, PieChart, Cell, ResponsiveContainer } from 'recharts';
 /*
     Content gets updated dynamically for every specified N second-millisecond
 */
@@ -13,7 +16,8 @@ class ChartView extends React.Component{
     }
     constructor(props) {
         super(props);  
-        this.COLORS = props.COLORS;
+        this.COLORS = RandomColor.randomColor({luminosity: 'dark',count: props.choices.results.length})
+        console.log(this.COLORS.length);
         this.state.choices = props.choices.results;
     }    
     componentDidUpdate(prevProps){
@@ -21,12 +25,14 @@ class ChartView extends React.Component{
             this.setState({ choices: this.props.choices.results });
         if(prevProps.choices !== this.props.choices)
             this.setState({ choices: this.props.choices.results });
-
+        if(prevProps.choices.results.length !== this.props.choices.results.length)
+            this.COLORS = RandomColor.randomColor({luminosity: 'dark',count: this.props.choices.results.length});
     }
     render(){
         return(
-            <ResponsiveContainer height={200} width='100%'>
-                <PieChart width={730} height={250}>
+            <ResponsiveContainer height={270} width='100%'>
+                <PieChart width={730} height={270}>
+                    <Legend verticalAlign="top" height={10}/>
                     <Pie isAnimationActive={false} data={ this.state.choices } dataKey="votes" nameKey="name" outerRadius={70} label>
                     {
                         this.state.choices.map((entry, index) => <Cell key={null} fill={this.COLORS[index % this.COLORS.length]}/>)
