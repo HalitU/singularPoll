@@ -10,9 +10,6 @@ class NewPoll extends React.Component{
         ],
         newPollQuestion: null
     }
-    constructor(props){
-        super(props);
-    }
     open_modal = () => { this.setState({ open: true }) }
     close_modal = () => { 
         this.setState({ open: false }) 
@@ -60,22 +57,41 @@ class NewPoll extends React.Component{
                 <Modal.Header>Creating a New Poll</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
-                        <Form>
-                            <Form.Field label='Poll Question:' name="newPollQuestion" control='textarea' rows='2' onChange={ this.handleInputChange } />
+                        <Form onSubmit={ this.handleSubmission }>
+                            <Form.Field 
+                                label='Poll Question:' 
+                                name="newPollQuestion" 
+                                control='textarea' 
+                                rows='2' 
+                                onChange={ this.handleInputChange }
+                                maxLength={ 200 }
+                                required />
                             <Form.Group>
-                                <Form.Button color="blue" onClick={ this.addNewChoice }>Add New Choice</Form.Button>
+                                <Form.Button 
+                                    color="blue" 
+                                    type="button"
+                                    onClick={ this.addNewChoice }
+                                    content="Add New Choice" />
                             </Form.Group>
                             {
                                 this.state.choices.map((val, idx) => {
                                     return (
                                         <Form.Field key={ val }>
-                                            <Input placeholder={ val } name={ val } onChange={ this.handleInputChange } />
+                                            <Input 
+                                                key={ val }
+                                                placeholder={ val } 
+                                                name={ val } 
+                                                onChange={ this.handleInputChange }
+                                                maxLength={ 200 }
+                                                required />
                                         </Form.Field>   
                                     )
                                 })
                             }
                             <Form.Group>
-                                <Form.Button onClick={ this.handleSubmission } color="green">Submit</Form.Button>
+                                <Form.Button 
+                                    color="green"
+                                    content="Submit" />
                             </Form.Group>
                         </Form>
                     </Modal.Description>

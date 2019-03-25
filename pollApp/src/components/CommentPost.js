@@ -11,17 +11,24 @@ class CommentPost extends React.Component{
   
     handleSubmit = () => {
       this.onCommentSubmit(this.state.name);
+      this.setState({ name: '' });
     }
   
     render() {
       const { name } = this.state
   
       return (
-        <Form>
+        <Form onSubmit={ this.handleSubmit }>
             <Form.Field>
-                <Form.TextArea placeholder='Comment' name='name' value={name} onChange={this.handleChange} />
+                <Form.TextArea 
+                  placeholder='Comment' 
+                  name='name' 
+                  value={name} 
+                  onChange={this.handleChange} 
+                  maxLength={ 250 }
+                  required/>
             </Form.Field>
-            <Form.Button onClick={ this.handleSubmit } content='Submit' />
+            <Form.Button content='Submit' />
         </Form>
       )
     }

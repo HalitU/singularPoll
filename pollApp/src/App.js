@@ -3,9 +3,9 @@ import axios from 'axios';
 import './App.css';
 
 // Additional imports
-import BlogBody from './BlogBody';
-import BlogPost from './BlogPost';
-import ChartView from './ChartView';
+import BlogBody from './components/BlogBody';
+import BlogPost from './components/BlogPost';
+import ChartView from './components/ChartView';
 import CommentPost from './components/CommentPost';
 import TopBar from './components/TopBar';
 import VoteForm from './components/VoteForm';
@@ -69,7 +69,6 @@ class App extends Component {
       await hubConnection.start();
 
       hubConnection.on("ReceiveMessage", (message) => {
-        const endcodedMsg = message;
         this.pull_poll(this.state.current_pie.pollId);
       });
 

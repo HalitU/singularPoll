@@ -22,7 +22,15 @@ class ExistingPoll extends React.Component{
                     <Modal.Description>
                         <Form onSubmit={ this.handleSubmission }>
                             <Form.Group>
-                                <Form.Field label='Poll ID' name='poll_id' onChange={ this.props.handleChange } control='input' type='number' min={0}/>
+                                <Form.Field 
+                                    label='Poll ID' 
+                                    name='poll_id' 
+                                    onChange={ this.props.handleChange } 
+                                    control='input' 
+                                    type='number' 
+                                    min={0}
+                                    required
+                                    />
                             </Form.Group>
                             <Form.Button>Submit</Form.Button>
                         </Form>

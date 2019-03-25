@@ -4,13 +4,16 @@ import { Form, Header, Radio } from 'semantic-ui-react';
 class VoteForm extends React.Component{
     state = {
         voteQuestion: null,
-        choices: null
+        choices: null,
+        value: null
     }
     constructor(props){
         super(props);
         this.aVoteMethod = props.voteSubmit;
         this.state.voteQuestion = props.voteQuestion;
         this.state.choices = props.choices;
+        // Default choice
+        this.state.value = props.choices[0].resultId;
     }
     // handleChange = (e, { value }) => this.setState({ value })
     handleChange = (e, { name, value }) => this.setState({ [name]: value, value: value })
@@ -42,10 +45,10 @@ class VoteForm extends React.Component{
             );
         });
         return (
-        <Form>
+        <Form onSubmit={ this.handleSubmit }>
             <Header as="h3">{ this.state.voteQuestion }</Header>
             { radio_fields }
-            <Form.Button onClick={ this.handleSubmit } content='Submit' />
+            <Form.Button  color="linkedin" content='Vote' />
         </Form>
         )
     }
