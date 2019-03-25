@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Comment } from 'semantic-ui-react';
+import { Comment, Card, Image } from 'semantic-ui-react';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 class BlogPost extends React.Component{
     
@@ -11,6 +13,7 @@ class BlogPost extends React.Component{
         this.author = props.author;
         this.image = props.image;
         this.text = props.text; 
+        this.date = props.date;
     };
 
     // You always have to define render!
@@ -18,11 +21,11 @@ class BlogPost extends React.Component{
     render(){
         return (
             <Comment>
-                <Comment.Avatar src={ this.image } height="20%" width="20%" />
+                <Comment.Avatar as='a' src={ this.image } height="20%" width="20%" />
                 <Comment.Content>
                     <Comment.Author as='a'>{ this.author }</Comment.Author>
                     <Comment.Metadata>
-                        <div>Today at 5:42PM</div>
+                        <Moment>{ this.date }</Moment>
                     </Comment.Metadata>
                     <Comment.Text>{ this.text }</Comment.Text>
                 </Comment.Content>

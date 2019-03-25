@@ -3,7 +3,6 @@ import axios from 'axios';
 import './App.css';
 
 // Additional imports
-import BlogBody from './components/BlogBody';
 import BlogPost from './components/BlogPost';
 import ChartView from './components/ChartView';
 import CommentPost from './components/CommentPost';
@@ -80,7 +79,7 @@ class App extends Component {
     this.pull_poll(this.state.current_pie.pollId);
   }
   onMessageSubmit = async (message) => {
-    await this.state.voteConnection.invoke("SendMessage", message, this.state.current_pie.pollId);
+    await this.state.voteConnection.invoke("SendMessage", message, this.state.current_pie.pollId, faker.name.findName());
     this.pull_poll(this.state.current_pie.pollId);
   }
   // Pulling the poll will be done via API
@@ -125,14 +124,13 @@ class App extends Component {
       if( this.state.current_pie.comments.length !== 0 ){
         this.state.current_pie.comments.forEach(element => {
           comment_section.push(
-            <BlogBody key={ element.commentId }>
               <BlogPost
-                author={ element.commentId }
+                author={ element.userName }
+                date={ element.postDate }
                 image={ faker.image.avatar() } 
                 text={ element.text }  
                 key={ element.commentId }   
               />
-            </BlogBody> 
           );
         });              
       }else{
@@ -144,7 +142,7 @@ class App extends Component {
 
     return (
     
-      <Grid centered columns={2}>
+      <Grid centered columns={4}>
         {/* Navigation Bar */}
         <Grid.Row>
           <TopBar 

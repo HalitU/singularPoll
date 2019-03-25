@@ -43,16 +43,16 @@ namespace baseService.Controllers
 
             return Clients.Group(groupName).SendAsync("ReceiveMessage", vote);
         }
-        public Task SendMessage(string message, string groupName)
+        public Task SendMessage(string message, string groupName, string authorName)
         {
             Console.WriteLine($"Sending {message} to {Context.ConnectionId} who has the group {groupName}.");
 
             int pollID = Int32.Parse(groupName);
-            Console.WriteLine("Poll Id: " + pollID);
             Poll currentPoll = pollContext.Polls.SingleOrDefault(p => p.PollId == pollID);
-            Console.WriteLine("Current Poll: " + currentPoll);
             // Create new comment
             Comment sentComment = new Comment();
+            sentComment.UserName = authorName;
+            sentComment.PostDate = DateTime.Now;
             sentComment.Text = message;
             sentComment.Poll = currentPoll;
             sentComment.PollId = currentPoll.PollId;

@@ -1,11 +1,12 @@
 # Singular Poll
 
-A poll application page made with React and ASP.NET Core.
+A poll application page made with React and ASP.NET Core. SignalR is used for hub communication between clients. A dotnet api service is written for database calls from react. On react side axios is being used for API calls.
 
-Since user information is not a part of the project all polls and votes are anonymous.
+Since user information is not a part of the project all polls and votes are anonymous for now.
 
 ## How to install
 
+Under baseService directory:
 
 ```
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
@@ -24,6 +25,8 @@ dotnet ef database update
 ```
 dotnet run
 ```
+
+Under pollApp directory:
 
 ```
 npm install
