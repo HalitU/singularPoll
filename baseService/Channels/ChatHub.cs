@@ -6,7 +6,7 @@ using baseService.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace baseService.Controllers
+namespace baseService.Channels
 {
     public class ChatHub : Hub
     {
