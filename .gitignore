@@ -7,7 +7,7 @@
 
 # db
 /baseService/Migrations
-.db
+/baseService/polling.db
 
 # testing
 /pollApp/coverage

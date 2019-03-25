@@ -10,14 +10,11 @@ import { Legend, Pie, PieChart, Cell, ResponsiveContainer } from 'recharts';
 */
 class ChartView extends React.Component{
     state = {
-        data: null,
-        api_connection: null,
         choices: null
     }
     constructor(props) {
         super(props);  
         this.COLORS = RandomColor.randomColor({luminosity: 'dark',count: props.choices.results.length})
-        console.log(this.COLORS.length);
         this.state.choices = props.choices.results;
     }    
     componentDidUpdate(prevProps){

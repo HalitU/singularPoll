@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Comment, Card, Image } from 'semantic-ui-react';
+import { Comment } from 'semantic-ui-react';
 import Moment from 'react-moment';
 import 'moment-timezone';
 
