@@ -29,40 +29,50 @@ namespace baseService.Channels
         }        
         public async Task SendVote(int vote, string groupName)
         {
-            Console.WriteLine($"Reading {vote} from {Context.ConnectionId} who has the group {groupName}.");
+            try{
+                Console.WriteLine($"Reading {vote} from {Context.ConnectionId} who has the group {groupName}.");
 
-            int pollID = Int32.Parse(groupName);
-            Console.WriteLine("Poll Id: " + pollID);
-            Poll currentPoll = await pollContext.Polls.SingleOrDefaultAsync(p => p.PollId == pollID);
-            
-            Result res = await pollContext.Results.SingleOrDefaultAsync(p => p.ResultId == vote);
-            res.Votes++;
-            // Don't forget to save changes
-            var count = pollContext.SaveChangesAsync();
-            Console.WriteLine("{0} records saved to database", count);            
+                int pollID = Int32.Parse(groupName);
+                Console.WriteLine("Poll Id: " + pollID);
+                Poll currentPoll = await pollContext.Polls.SingleOrDefaultAsync(p => p.PollId == pollID);
+                
+                Result res = await pollContext.Results.Include(p => p.Poll).SingleOrDefaultAsync(p => p.PollId == pollID && p.ResultId == vote);
+                res.Votes++;
+                // Don't forget to save changes
+                var count = pollContext.SaveChangesAsync();
+                Console.WriteLine("{0} records saved to database", count);            
 
-            await Clients.Group(groupName).SendAsync("ReceiveMessage", vote);
+                await Clients.Group(groupName).SendAsync("ReceiveMessage", vote);
+            }catch{
+                // Return error message to caller
+                await Clients.Caller.SendAsync("ReceiveMessage", "Error# An exception occured please try again.");
+            }
         }
         public async Task SendMessage(string message, string groupName, string authorName)
         {
-            Console.WriteLine($"Sending {message} to {Context.ConnectionId} who has the group {groupName}.");
+            try{
+                Console.WriteLine($"Sending {message} to {Context.ConnectionId} who has the group {groupName}.");
 
-            int pollID = Int32.Parse(groupName);
-            Poll currentPoll = await pollContext.Polls.SingleOrDefaultAsync(p => p.PollId == pollID);
-            // Create new comment
-            Comment sentComment = new Comment();
-            sentComment.UserName = authorName;
-            sentComment.PostDate = DateTime.Now;
-            sentComment.Text = message;
-            sentComment.Poll = currentPoll;
-            sentComment.PollId = currentPoll.PollId;
+                int pollID = Int32.Parse(groupName);
+                Poll currentPoll = await pollContext.Polls.SingleOrDefaultAsync(p => p.PollId == pollID);
+                // Create new comment
+                Comment sentComment = new Comment();
+                sentComment.UserName = authorName;
+                sentComment.PostDate = DateTime.Now;
+                sentComment.Text = message;
+                sentComment.Poll = currentPoll;
+                sentComment.PollId = currentPoll.PollId;
 
-            await pollContext.Comments.AddAsync(sentComment);
-            // Don't forget to save changes
-            var count = pollContext.SaveChangesAsync();
-            Console.WriteLine("{0} records saved to database", count);
+                await pollContext.Comments.AddAsync(sentComment);
+                // Don't forget to save changes
+                var count = pollContext.SaveChangesAsync();
+                Console.WriteLine("{0} records saved to database", count);
 
-            await Clients.Group(groupName).SendAsync("ReceiveMessage", message);
+                await Clients.Group(groupName).SendAsync("ReceiveMessage", message);
+            }catch{
+                // Return error message to caller
+                await Clients.Caller.SendAsync("ReceiveMessage", "Error# An exception occured please try again.");
+            }
         }
     }
 }
