@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace baseService.Channels
 {
-    public class ChatHub : Hub
+    public class ChatHub : Hub, IChatHub
     {
-        private readonly PollContext pollContext;
-        public ChatHub(PollContext pC){
-            pollContext = pC;
+        private readonly IPollRepository _repository;
+        public ChatHub(IPollRepository repository){
+            _repository = repository;
         }
         public async Task AddToGroup(string groupName)
         {
@@ -34,12 +34,12 @@ namespace baseService.Channels
 
                 int pollID = Int32.Parse(groupName);
                 Console.WriteLine("Poll Id: " + pollID);
-                Poll currentPoll = await pollContext.Polls.SingleOrDefaultAsync(p => p.PollId == pollID);
+                Poll currentPoll = await _repository.GetPoll(pollID);
                 
-                Result res = await pollContext.Results.Include(p => p.Poll).SingleOrDefaultAsync(p => p.PollId == pollID && p.ResultId == vote);
+                Result res = await _repository.GetResult(pollID, vote);
                 res.Votes++;
                 // Don't forget to save changes
-                var count = pollContext.SaveChangesAsync();
+                var count = await _repository.SaveChanges();
                 Console.WriteLine("{0} records saved to database", count);            
 
                 await Clients.Group(groupName).SendAsync("ReceiveMessage", vote);
@@ -54,7 +54,7 @@ namespace baseService.Channels
                 Console.WriteLine($"Sending {message} to {Context.ConnectionId} who has the group {groupName}.");
 
                 int pollID = Int32.Parse(groupName);
-                Poll currentPoll = await pollContext.Polls.SingleOrDefaultAsync(p => p.PollId == pollID);
+                Poll currentPoll = await _repository.GetPoll(pollID);
                 // Create new comment
                 Comment sentComment = new Comment();
                 sentComment.UserName = authorName;
@@ -63,9 +63,9 @@ namespace baseService.Channels
                 sentComment.Poll = currentPoll;
                 sentComment.PollId = currentPoll.PollId;
 
-                await pollContext.Comments.AddAsync(sentComment);
+                await _repository.AddComment(sentComment);
                 // Don't forget to save changes
-                var count = pollContext.SaveChangesAsync();
+                var count = _repository.SaveChanges();
                 Console.WriteLine("{0} records saved to database", count);
 
                 await Clients.Group(groupName).SendAsync("ReceiveMessage", message);

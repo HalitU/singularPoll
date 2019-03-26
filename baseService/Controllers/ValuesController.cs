@@ -19,9 +19,9 @@ namespace baseService.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<Poll> Get(int id)
+        public async Task<ActionResult<Poll>> Get(int id)
         {
-            Poll result = _repository.GetPoll(id);
+            Poll result = await _repository.GetPoll(id);
             if(result != null)
             {
                 return result;
@@ -32,9 +32,9 @@ namespace baseService.Controllers
 
         // POST api/values
         [HttpPost]
-        public ActionResult<Poll> Post([FromBody] Poll poll)
+        public async Task<ActionResult<Poll>> Post([FromBody] Poll poll)
         {
-            return _repository.AddPoll(poll);
+            return await _repository.AddPoll(poll);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using baseService.Controllers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace baseService.Tests
 {
@@ -29,29 +30,43 @@ namespace baseService.Tests
             }.AsQueryable();
 
             var mockRepository = new Mock<IPollRepository>();
-            mockRepository.Setup(m => m.GetPoll(1)).Returns(polls.ElementAt(0));
+            mockRepository.Setup(m => m.GetPoll(1)).Returns(getAPollFromList(polls));
 
             ValuesController controller = new ValuesController(mockRepository.Object);
 
             var actual = controller.Get(1);
 
-            Assert.Equal("Whats up?", actual.Value.PollQuestion);
+            Assert.Equal("Whats up?", actual.Result.Value.PollQuestion);
         }
         
         [Fact]
-        public void AddPollTest()
+        public async void AddPollTest()
         {
             Poll obj = new Poll();
             obj.PollQuestion = "Whats up?";
             obj.Results = getAResultList().ToList();
 
-            var mockRepository = new Mock<IPollRepository>();
-            mockRepository.Setup(p => p.AddPoll(obj)).Returns(obj);
-            
+
+            var mockRepository = new Mock<IPollRepository>();            
+            mockRepository.Setup(p => p.AddPoll(obj)).Returns(getAPoll(obj));
+
             ValuesController controller = new ValuesController(mockRepository.Object);
 
-            ActionResult<Poll> result = controller.Post(obj);
+
+            ActionResult<Poll> result = await controller.Post(obj);
             Assert.Equal("Whats up?", result.Value.PollQuestion);
+        }
+        public async Task<Poll> getAPollFromList(IQueryable<Poll> pollList)
+        {
+            return await Task.Run(() => { 
+                return pollList.ElementAt(0);
+            });
+        }
+        public async Task<Poll> getAPoll(Poll result)
+        {
+            return await Task.Run(() => {
+                return result;
+            });
         }
         public IQueryable<Result> getAResultList()
         {
