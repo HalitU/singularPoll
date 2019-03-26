@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace baseService.Models
 {
@@ -8,7 +9,11 @@ namespace baseService.Models
     public class Result
     {
         public int ResultId { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string Name { get; set; }
+
         public int Votes { get; set; }
 
         public int PollId { get; set; }

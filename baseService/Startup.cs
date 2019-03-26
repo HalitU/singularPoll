@@ -52,6 +52,7 @@ namespace baseService
             }));
 
             services.AddDbContext<PollContext>();
+            services.AddScoped<IPollRepository, PollRepository>();
             services.AddSignalR();
         }
 

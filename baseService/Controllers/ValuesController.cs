@@ -12,48 +12,29 @@ namespace baseService.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly PollContext pollContext;
-        public ValuesController(PollContext pC){
-            pollContext = pC;
-        }
-        // GET api/values
-        [HttpGet]
-        public void Get()
-        {
+        private readonly IPollRepository _repository;
+        public ValuesController(IPollRepository repository){
+            _repository = repository;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<Poll> Get(int id)
         {
-            Poll poll = pollContext.Polls
-                            .Include(p => p.Comments)
-                            .Include(p => p.Results)
-                            .SingleOrDefault(p => p.PollId == id);
-            return poll;
+            Poll result = _repository.GetPoll(id);
+            if(result != null)
+            {
+                return result;
+            }else{
+                return StatusCode(404, "A poll with that id doesnt exist.");
+            }
         }
 
         // POST api/values
         [HttpPost]
         public ActionResult<Poll> Post([FromBody] Poll poll)
         {
-
-            pollContext.Polls.Add(poll);
-            var count = pollContext.SaveChanges();
-            Console.WriteLine("{0} records saved to database", count);
-            return poll;
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return _repository.AddPoll(poll);
         }
     }
 }
