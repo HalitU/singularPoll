@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace baseService.Models
 {
@@ -11,7 +12,10 @@ namespace baseService.Models
         public DbSet<Poll> Polls { get; set; }
         public DbSet<Result> Results { get; set; }
         public DbSet<Comment> Comments { get; set; }
-
+        public async Task<int> Save()
+        {
+            return await this.SaveChangesAsync();
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=polling.db");

@@ -1,0 +1,544 @@
+{
+ "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService.Tests\\bin\\Debug\\netcoreapp2.2\\baseService.dll": {
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Program.cs": {
+   "baseService.Program": {
+    "System.Void baseService.Program::Main(System.String[])": {
+     "17": 0,
+     "18": 0,
+     "19": 0
+    },
+    "Microsoft.AspNetCore.Hosting.IWebHostBuilder baseService.Program::CreateWebHostBuilder(System.String[])": {
+     "22": 0,
+     "23": 0
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Startup.cs": {
+   "baseService.Startup": {
+    "System.Void baseService.Startup::.ctor(Microsoft.Extensions.Configuration.IConfiguration)": {
+     "23": 0,
+     "24": 0,
+     "25": 0,
+     "26": 0
+    },
+    "Microsoft.Extensions.Configuration.IConfiguration baseService.Startup::get_Configuration()": {
+     "28": 0
+    },
+    "System.Void baseService.Startup::ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
+     "32": 0,
+     "33": 0,
+     "34": 0,
+     "35": 0,
+     "36": 0,
+     "37": 0,
+     "41": 0,
+     "42": 0,
+     "43": 0,
+     "45": 0,
+     "46": 0,
+     "47": 0,
+     "48": 0,
+     "49": 0,
+     "50": 0,
+     "51": 0,
+     "52": 0,
+     "54": 0,
+     "55": 0,
+     "56": 0,
+     "57": 0
+    },
+    "System.Void baseService.Startup::Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)": {
+     "61": 0,
+     "62": 0,
+     "63": 0,
+     "64": 0,
+     "65": 0,
+     "67": 0,
+     "68": 0,
+     "69": 0,
+     "70": 0,
+     "73": 0,
+     "74": 0,
+     "75": 0,
+     "76": 0,
+     "77": 0,
+     "78": 0,
+     "79": 0,
+     "80": 0,
+     "81": 0
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Models\\Comment.cs": {
+   "baseService.Models.Comment": {
+    "System.Int32 baseService.Models.Comment::get_CommentId()": {
+     "10": 0
+    },
+    "System.String baseService.Models.Comment::get_UserName()": {
+     "14": 0
+    },
+    "System.DateTime baseService.Models.Comment::get_PostDate()": {
+     "17": 0
+    },
+    "System.String baseService.Models.Comment::get_Text()": {
+     "21": 0
+    },
+    "System.Int32 baseService.Models.Comment::get_PollId()": {
+     "22": 0
+    },
+    "baseService.Models.Poll baseService.Models.Comment::get_Poll()": {
+     "23": 0
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Models\\Poll.cs": {
+   "baseService.Models.Poll": {
+    "System.Int32 baseService.Models.Poll::get_PollId()": {
+     "10": 5
+    },
+    "System.String baseService.Models.Poll::get_PollQuestion()": {
+     "14": 9
+    },
+    "System.Collections.Generic.ICollection`1<baseService.Models.Result> baseService.Models.Poll::get_Results()": {
+     "17": 7
+    },
+    "System.Collections.Generic.ICollection`1<baseService.Models.Comment> baseService.Models.Poll::get_Comments()": {
+     "18": 0
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Models\\PollContext.cs": {
+   "baseService.Models.PollContext": {
+    "System.Void baseService.Models.PollContext::.ctor()": {
+     "10": 3
+    },
+    "System.Void baseService.Models.PollContext::.ctor(Microsoft.EntityFrameworkCore.DbContextOptions`1<baseService.Models.PollContext>)": {
+     "11": 0
+    },
+    "Microsoft.EntityFrameworkCore.DbSet`1<baseService.Models.Poll> baseService.Models.PollContext::get_Polls()": {
+     "12": 2
+    },
+    "Microsoft.EntityFrameworkCore.DbSet`1<baseService.Models.Result> baseService.Models.PollContext::get_Results()": {
+     "13": 1
+    },
+    "Microsoft.EntityFrameworkCore.DbSet`1<baseService.Models.Comment> baseService.Models.PollContext::get_Comments()": {
+     "14": 1
+    },
+    "System.Void baseService.Models.PollContext::OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)": {
+     "20": 0,
+     "21": 0,
+     "22": 0
+    }
+   },
+   "baseService.Models.PollContext/<Save>d__14": {
+    "System.Void baseService.Models.PollContext/<Save>d__14::MoveNext()": {
+     "16": 1,
+     "17": 1,
+     "18": 1
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Models\\PollRepository.cs": {
+   "baseService.Models.PollRepository": {
+    "System.Void baseService.Models.PollRepository::.ctor(baseService.Models.PollContext)": {
+     "14": 2,
+     "15": 1,
+     "16": 1
+    }
+   },
+   "baseService.Models.PollRepository/<AddPoll>d__2": {
+    "System.Void baseService.Models.PollRepository/<AddPoll>d__2::MoveNext()": {
+     "18": 1,
+     "19": 1,
+     "20": 1,
+     "21": 1,
+     "22": 1
+    }
+   },
+   "baseService.Models.PollRepository/<GetPoll>d__3": {
+    "System.Void baseService.Models.PollRepository/<GetPoll>d__3::MoveNext()": {
+     "24": 0,
+     "25": 0,
+     "26": 0,
+     "27": 0,
+     "28": 0,
+     "29": 0
+    }
+   },
+   "baseService.Models.PollRepository/<GetResult>d__4": {
+    "System.Void baseService.Models.PollRepository/<GetResult>d__4::MoveNext()": {
+     "31": 0,
+     "32": 0,
+     "33": 0
+    }
+   },
+   "baseService.Models.PollRepository/<AddComment>d__5": {
+    "System.Void baseService.Models.PollRepository/<AddComment>d__5::MoveNext()": {
+     "35": 0,
+     "36": 0,
+     "38": 0,
+     "39": 0,
+     "40": 0,
+     "41": 0,
+     "42": 0,
+     "43": 0,
+     "45": 0,
+     "46": 0,
+     "47": 0
+    }
+   },
+   "baseService.Models.PollRepository/<IncrementVote>d__6": {
+    "System.Void baseService.Models.PollRepository/<IncrementVote>d__6::MoveNext()": {
+     "49": 0,
+     "50": 0,
+     "51": 0,
+     "52": 0,
+     "53": 0
+    }
+   },
+   "baseService.Models.PollRepository/<SaveChanges>d__7": {
+    "System.Void baseService.Models.PollRepository/<SaveChanges>d__7::MoveNext()": {
+     "55": 0,
+     "56": 0,
+     "57": 0
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Models\\Result.cs": {
+   "baseService.Models.Result": {
+    "System.Int32 baseService.Models.Result::get_ResultId()": {
+     "11": 6
+    },
+    "System.String baseService.Models.Result::get_Name()": {
+     "15": 10
+    },
+    "System.Int32 baseService.Models.Result::get_Votes()": {
+     "17": 10
+    },
+    "System.Int32 baseService.Models.Result::get_PollId()": {
+     "19": 0
+    },
+    "baseService.Models.Poll baseService.Models.Result::get_Poll()": {
+     "20": 0
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Migrations\\20190326144129_InitialCreate.cs": {
+   "baseService.Migrations.InitialCreate": {
+    "System.Void baseService.Migrations.InitialCreate::Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)": {
+     "9": 0,
+     "10": 0,
+     "11": 0,
+     "12": 0,
+     "13": 0,
+     "14": 0,
+     "15": 0,
+     "16": 0,
+     "17": 0,
+     "18": 0,
+     "19": 0,
+     "20": 0,
+     "21": 0,
+     "23": 0,
+     "24": 0,
+     "25": 0,
+     "26": 0,
+     "27": 0,
+     "28": 0,
+     "29": 0,
+     "30": 0,
+     "31": 0,
+     "32": 0,
+     "33": 0,
+     "34": 0,
+     "35": 0,
+     "36": 0,
+     "37": 0,
+     "38": 0,
+     "39": 0,
+     "40": 0,
+     "41": 0,
+     "42": 0,
+     "43": 0,
+     "45": 0,
+     "46": 0,
+     "47": 0,
+     "48": 0,
+     "49": 0,
+     "50": 0,
+     "51": 0,
+     "52": 0,
+     "53": 0,
+     "54": 0,
+     "55": 0,
+     "56": 0,
+     "57": 0,
+     "58": 0,
+     "59": 0,
+     "60": 0,
+     "61": 0,
+     "62": 0,
+     "63": 0,
+     "64": 0,
+     "66": 0,
+     "67": 0,
+     "68": 0,
+     "69": 0,
+     "71": 0,
+     "72": 0,
+     "73": 0,
+     "74": 0,
+     "75": 0
+    },
+    "System.Void baseService.Migrations.InitialCreate::Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)": {
+     "78": 0,
+     "79": 0,
+     "80": 0,
+     "82": 0,
+     "83": 0,
+     "85": 0,
+     "86": 0,
+     "87": 0
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Migrations\\20190326144129_InitialCreate.Designer.cs": {
+   "baseService.Migrations.InitialCreate": {
+    "System.Void baseService.Migrations.InitialCreate::BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)": {
+     "16": 0,
+     "18": 0,
+     "19": 0,
+     "21": 0,
+     "22": 0,
+     "23": 0,
+     "24": 0,
+     "25": 0,
+     "26": 0,
+     "27": 0,
+     "28": 0,
+     "29": 0,
+     "30": 0,
+     "31": 0,
+     "32": 0,
+     "33": 0,
+     "34": 0,
+     "35": 0,
+     "36": 0,
+     "37": 0,
+     "38": 0,
+     "39": 0,
+     "40": 0,
+     "41": 0,
+     "42": 0,
+     "43": 0,
+     "45": 0,
+     "46": 0,
+     "47": 0,
+     "48": 0,
+     "49": 0,
+     "50": 0,
+     "51": 0,
+     "52": 0,
+     "53": 0,
+     "54": 0,
+     "55": 0,
+     "56": 0,
+     "57": 0,
+     "59": 0,
+     "60": 0,
+     "61": 0,
+     "62": 0,
+     "63": 0,
+     "64": 0,
+     "65": 0,
+     "66": 0,
+     "67": 0,
+     "68": 0,
+     "69": 0,
+     "70": 0,
+     "71": 0,
+     "72": 0,
+     "73": 0,
+     "74": 0,
+     "75": 0,
+     "76": 0,
+     "77": 0,
+     "79": 0,
+     "80": 0,
+     "81": 0,
+     "82": 0,
+     "83": 0,
+     "84": 0,
+     "85": 0,
+     "87": 0,
+     "88": 0,
+     "89": 0,
+     "90": 0,
+     "91": 0,
+     "92": 0,
+     "93": 0,
+     "95": 0
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Migrations\\PollContextModelSnapshot.cs": {
+   "baseService.Migrations.PollContextModelSnapshot": {
+    "System.Void baseService.Migrations.PollContextModelSnapshot::BuildModel(Microsoft.EntityFrameworkCore.ModelBuilder)": {
+     "14": 0,
+     "16": 0,
+     "17": 0,
+     "19": 0,
+     "20": 0,
+     "21": 0,
+     "22": 0,
+     "23": 0,
+     "24": 0,
+     "25": 0,
+     "26": 0,
+     "27": 0,
+     "28": 0,
+     "29": 0,
+     "30": 0,
+     "31": 0,
+     "32": 0,
+     "33": 0,
+     "34": 0,
+     "35": 0,
+     "36": 0,
+     "37": 0,
+     "38": 0,
+     "39": 0,
+     "40": 0,
+     "41": 0,
+     "43": 0,
+     "44": 0,
+     "45": 0,
+     "46": 0,
+     "47": 0,
+     "48": 0,
+     "49": 0,
+     "50": 0,
+     "51": 0,
+     "52": 0,
+     "53": 0,
+     "54": 0,
+     "55": 0,
+     "57": 0,
+     "58": 0,
+     "59": 0,
+     "60": 0,
+     "61": 0,
+     "62": 0,
+     "63": 0,
+     "64": 0,
+     "65": 0,
+     "66": 0,
+     "67": 0,
+     "68": 0,
+     "69": 0,
+     "70": 0,
+     "71": 0,
+     "72": 0,
+     "73": 0,
+     "74": 0,
+     "75": 0,
+     "77": 0,
+     "78": 0,
+     "79": 0,
+     "80": 0,
+     "81": 0,
+     "82": 0,
+     "83": 0,
+     "85": 0,
+     "86": 0,
+     "87": 0,
+     "88": 0,
+     "89": 0,
+     "90": 0,
+     "91": 0,
+     "93": 0
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Controllers\\ValuesController.cs": {
+   "baseService.Controllers.ValuesController": {
+    "System.Void baseService.Controllers.ValuesController::.ctor(baseService.Models.IPollRepository)": {
+     "16": 14,
+     "17": 7,
+     "18": 7
+    }
+   },
+   "baseService.Controllers.ValuesController/<Get>d__2": {
+    "System.Void baseService.Controllers.ValuesController/<Get>d__2::MoveNext()": {
+     "23": 2,
+     "24": 2,
+     "25": 2,
+     "26": 2,
+     "27": 2,
+     "28": 0,
+     "29": 0,
+     "31": 2
+    }
+   },
+   "baseService.Controllers.ValuesController/<Post>d__3": {
+    "System.Void baseService.Controllers.ValuesController/<Post>d__3::MoveNext()": {
+     "36": 5,
+     "37": 5,
+     "38": 5
+    }
+   }
+  },
+  "C:\\Users\\Halit U\\Desktop\\Yüksek Lisans\\Projects\\singularPoll\\singularPoll\\baseService\\Channels\\ChatHub.cs": {
+   "baseService.Channels.ChatHub": {
+    "System.Void baseService.Channels.ChatHub::.ctor(baseService.Models.IPollRepository)": {
+     "14": 12,
+     "15": 6,
+     "16": 6
+    }
+   },
+   "baseService.Channels.ChatHub/<AddToGroup>d__2": {
+    "System.Void baseService.Channels.ChatHub/<AddToGroup>d__2::MoveNext()": {
+     "18": 3,
+     "19": 3,
+     "20": 3,
+     "22": 3,
+     "23": 3
+    }
+   },
+   "baseService.Channels.ChatHub/<RemoveFromGroup>d__3": {
+    "System.Void baseService.Channels.ChatHub/<RemoveFromGroup>d__3::MoveNext()": {
+     "25": 1,
+     "26": 1,
+     "28": 1,
+     "29": 1
+    }
+   },
+   "baseService.Channels.ChatHub/<SendVote>d__4": {
+    "System.Void baseService.Channels.ChatHub/<SendVote>d__4::MoveNext()": {
+     "31": 2,
+     "32": 2,
+     "33": 2,
+     "34": 2,
+     "36": 2,
+     "37": 3,
+     "39": 1,
+     "40": 1,
+     "41": 2
+    }
+   },
+   "baseService.Channels.ChatHub/<SendMessage>d__5": {
+    "System.Void baseService.Channels.ChatHub/<SendMessage>d__5::MoveNext()": {
+     "43": 2,
+     "44": 2,
+     "45": 2,
+     "47": 2,
+     "49": 2,
+     "50": 3,
+     "52": 1,
+     "53": 1,
+     "54": 2
+    }
+   }
+  }
+ }
+}

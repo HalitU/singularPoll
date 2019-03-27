@@ -30,17 +30,8 @@ namespace baseService.Channels
         public async Task SendVote(int vote, string groupName)
         {
             try{
-                Console.WriteLine($"Reading {vote} from {Context.ConnectionId} who has the group {groupName}.");
-
                 int pollID = Int32.Parse(groupName);
-                Console.WriteLine("Poll Id: " + pollID);
-                Poll currentPoll = await _repository.GetPoll(pollID);
-                
-                Result res = await _repository.GetResult(pollID, vote);
-                res.Votes++;
-                // Don't forget to save changes
-                var count = await _repository.SaveChanges();
-                Console.WriteLine("{0} records saved to database", count);            
+                await _repository.IncrementVote(vote, pollID);
 
                 await Clients.Group(groupName).SendAsync("ReceiveMessage", vote);
             }catch{
@@ -51,22 +42,9 @@ namespace baseService.Channels
         public async Task SendMessage(string message, string groupName, string authorName)
         {
             try{
-                Console.WriteLine($"Sending {message} to {Context.ConnectionId} who has the group {groupName}.");
-
                 int pollID = Int32.Parse(groupName);
-                Poll currentPoll = await _repository.GetPoll(pollID);
-                // Create new comment
-                Comment sentComment = new Comment();
-                sentComment.UserName = authorName;
-                sentComment.PostDate = DateTime.Now;
-                sentComment.Text = message;
-                sentComment.Poll = currentPoll;
-                sentComment.PollId = currentPoll.PollId;
 
-                await _repository.AddComment(sentComment);
-                // Don't forget to save changes
-                var count = _repository.SaveChanges();
-                Console.WriteLine("{0} records saved to database", count);
+                await _repository.AddComment(authorName, message, pollID);
 
                 await Clients.Group(groupName).SendAsync("ReceiveMessage", message);
             }catch{

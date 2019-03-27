@@ -9,7 +9,8 @@ namespace baseService.Models
         Task<Poll> AddPoll(Poll poll);
         Task<Poll> GetPoll(int id);
         Task<Result> GetResult(int poll_id, int vote_id);
-        Task AddComment(Comment comment);
+        Task AddComment(string authorName, string message, int pollId);
+        Task IncrementVote(int result_id, int poll_id);
         Task<int> SaveChanges();
     }
 }

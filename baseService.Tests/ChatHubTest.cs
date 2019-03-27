@@ -149,11 +149,8 @@ namespace baseService.Tests
             myHub.Clients = mockClients.Object;
             myHub.Context = mockContext.Object;
 
-            // Add this hub to group
-            await myHub.AddToGroup("1");
-
             // Finally test
-            await myHub.SendVote(3, "1");
+            await myHub.SendVote(1, "2");
 
             mockClients.Verify(c => c.Caller, Times.Once);   
         }                
